@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="faculty_form_view">
+            <field name="name">bru.faculty</field>
+            <field name="model">bru.faculty</field>
+            <field name="arch" type="xml">
+                <form string="Faculty Form">
+                    <sheet>
+                        <h2>
+                            กรอกคณะ
+                        </h2>
+                        <group>
+                            <group >
+                                <field name="name"/>
+                                <field name="branch_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="faculty_tree_view">
+            <field name="name">bru.faculty</field>
+            <field name="model">bru.faculty</field>
+            <field name="arch" type="xml">
+                <tree string="Bru Branch Tree">
+                    <field name="name"/>
+                    <field name="branch_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_faculty" model="ir.actions.act_window">
+            <field name="name">Faculty</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bru.faculty</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_bru_faculty" sequence="1"
+                  parent="menu_faculty_id" action="action_faculty"/>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_bru_center" name="BRU Center " sequence="2"/>
+
+        <menuitem id="menu_address" name="BRU Data" sequence="1" parent="menu_bru_center"/>
+<!--        <menuitem id="menu_parcel" name="BRU Parcel Officer " sequence="2" parent="menu_bru_center"/>-->
+        <menuitem id="menu_branch_id" name="BRU Branch " sequence="2" parent="menu_bru_center"/>
+        <menuitem id="menu_budget_id" name="BRU Budget " sequence="3" parent="menu_bru_center"/>
+        <menuitem id="menu_officer_id" name="BRU Officer " sequence="4" parent="menu_bru_center"/>
+        <menuitem id="menu_faculty_id" name="BRU Faculty / Branch " sequence="5" parent="menu_bru_center"/>
+
+    </data>
+</odoo>

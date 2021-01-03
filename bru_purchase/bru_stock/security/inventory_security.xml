@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="group_bru_stock_approvals" model="res.groups">
+            <field name="name">Approvals</field>
+            <field name="category_id" ref="base.module_category_warehouse_management"/>
+        </record>
+
+    </data>
+</odoo>

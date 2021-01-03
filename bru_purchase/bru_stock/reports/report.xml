@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <report
+        id = "report_bru_purchase"
+        string="BRU Purchase"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="bru_stock.report_purchase"
+        file="bru_stock.report_purchase"/>
+</odoo>

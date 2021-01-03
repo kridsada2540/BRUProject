@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+         <record id="stock_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="purchase_number"/>
+                    <field name="document_type"/>
+                    <field name="budget_id"/>
+                    <field name="years"/>
+                    <field name="bru_officer_id"/>
+<!--                    <field name="bru_officer_id"/>-->
+                    <field name="detail"/>
+                </xpath>
+                <xpath expr="//field[@name='min_date']" position="after">
+                    <field name="name_id" string="เจ้าหน้าที่พัสดุ"/>
+                    <field name="faculty_ids"/>
+                    <field name="branch_id"/>
+                    <field name="for_use"/>
+                    <field name="product"/>
+<!--                    <field name="product"/>-->
+                    <field name="expenses"/>
+                    <field name="activity"/>
+                    <field name="remain_budg_id"/>
+                </xpath>
+
+                <xpath expr="//sheet/group" position="after">
+                     <sheet>
+                         <group col="12">
+                                 <div colspan="6" style="padding:8px;">
+                                     <label for = "people_purchase" />
+                                        <field name="people_purchase" colspan="3"/>
+                                 </div>
+                                 <div colspan="6"  style="padding:8px;" >
+                                    <label for ="people_check_id"/>
+                                        <field name="people_check_id" colspan="3"/>
+                                 </div>
+                         </group>
+                     </sheet>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
