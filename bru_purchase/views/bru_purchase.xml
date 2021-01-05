@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- set group on button confirm for Purchase manager -->
+                <xpath expr="//button[@name='button_confirm']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][last()]" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+                <!-- set group on button cancel for Purchase Manger -->
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="purchase_number" attrs="{'invisible': [('state', 'not in', ['draft','purchase'] )]}"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'not in', ['cancel'] )]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="document_type" attrs="{'readonly': [('purchase_number', '!=', False)]}"/>
+                     <field name="budget_id"/>
+                    <field name="years"/>
+                    <field name="bru_officer_id"/>
+                    <field name="detail"/>
+                </xpath>
+
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="name_id" string="เจ้าหน้าที่พัสดุ"/>
+                    <field name="faculty_ids"/>
+                    <field name="branch_id"/>
+                    <field name="for_use"/>
+                    <field name="product"/>
+                    <field name="expenses"/>
+                    <field name="activity"/>
+                    <field name="remain_budg_id"/>
+                </xpath>
+
+                 <xpath expr="//sheet/group" position="after">
+                     <sheet>
+                         <group col="12">
+                                 <div colspan="6" style="padding:8px;">
+                                     <label for = "people_purchase" />
+                                        <field name="people_purchase" colspan="3"/>
+                                 </div>
+                                 <div colspan="6"  style="padding:8px;" >
+                                    <label for ="people_check_id"/>
+                                     <field name="people_check_id" colspan="3"/>
+                                 </div>
+                         </group>
+                     </sheet>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
