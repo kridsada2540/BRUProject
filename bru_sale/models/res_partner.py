@@ -1,30 +1,10 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    alley = fields.Char(
-        string='Alley'
-    )
-    moo = fields.Char(
-        string="Moo"
-    )
-
-    tambon_id = fields.Many2one(
-        'tambon',
-        string='Tambon',
-    )
-    amphur_id = fields.Many2one(
-        'amphur',
-        string='Amphur',
-    )
-    province_id = fields.Many2one(
-        'province',
-        string='Province',
-
-    )
     faculty_ids = fields.Many2one(
         'bru.faculty',
         string=u'คณะ'
@@ -48,7 +28,6 @@ class ResPartner(models.Model):
     operating_agency = fields.Char(
         string=u'หน่วยงานปฏิบัติ'
     )
-
 
     @api.onchange('province_id')
     def _onchange_province_id(self):

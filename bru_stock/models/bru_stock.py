@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 
-from datetime import datetime, timedelta, date
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class BruStock(models.Model):
@@ -11,7 +12,6 @@ class BruStock(models.Model):
         string='Purchase Request',
         readonly=True
     )
-
     document_type = fields.Selection(
         selection=[
             ('PR01', u'PR01=ขออนุมัติซื้อวัสดุ'),
@@ -44,18 +44,18 @@ class BruStock(models.Model):
         string=u'เจ้าหน้าที่พัสดุ'
     )
     branch_id = fields.Many2one(
-        'bru.faculty',
-        # related='purchase_id.branch_id',
+        'faculty.branch',
+        related='purchase_id.branch_id',
         string=u'สาขา'
     )
     faculty_ids = fields.Many2one(
         'bru.faculty',
-        # related='purchase_id.faculty_ids',
+        related='purchase_id.faculty_ids',
         string=u'คณะ / สำนักงาน / ศูนย์'
     )
     bru_officer_id = fields.Many2one(
         'bru.branch',
-        # related='purchase_id.bru_officer_id',
+        related='purchase_id.bru_officer_id',
         string=u'ชื่อหน่วยงาน'
     )
     for_use = fields.Char(
@@ -64,7 +64,7 @@ class BruStock(models.Model):
     )
     budget_id = fields.Many2one(
         'bru.budget',
-        # related='purchase_id.budget_id',
+        related='purchase_id.budget_id',
         string=u'ชื่องบประมาณ'
     )
     product = fields.Char(
@@ -92,14 +92,79 @@ class BruStock(models.Model):
         string=u'ยอดงบประมาณคงเหลือ'
     )
     people_purchase = fields.One2many(
-        'res.partner',
-        'name',
-        related='purchase_id.people_purchase',
-        string=u'คณะกรรมการจัดซื้อ / จัดจ้าง'
+        'picking.res.partner.purchase',
+        'picking_id',
+        string=u'คณะกรรมการจัดซื้อ / จัดจ้าง',
     )
     people_check_id = fields.One2many(
-        'res.partner',
-        'name',
-        related='purchase_id.people_check_id',
+        'picking.res.partner.check',
+        'picking_id',
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
+    )
+
+    @api.multi
+    def _create_backorder(self, backorder_moves=[]):
+        for rec in self:
+            backorders = super(BruStock, rec)._create_backorder(
+                backorder_moves=backorder_moves)
+            for back_order in backorders:
+                if back_order.backorder_id:
+                    # people purhcase
+                    for purchase in back_order.backorder_id.people_purchase:
+                        self.env['picking.res.partner.purchase'].create({
+                            'picking_id': back_order.id,
+                            'partner_id': purchase.partner_id.id
+                        })
+                    # people check
+                    for check in back_order.backorder_id.people_check_id:
+                        self.env['picking.res.partner.check'].create({
+                            'picking_id': back_order.id,
+                            'partner_id': check.partner_id.id,
+                        })
+            return backorders
+
+
+class PickingResPartnerPurchase(models.Model):
+    _name = 'picking.res.partner.purchase'
+    _description = 'Picking Partner Purchase'
+
+    picking_id = fields.Many2one(
+        comodel_name='stock.picking',
+        string='Picking ID',
+    )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Name',
+        required=True,
+    )
+    phone = fields.Char(
+        string='Phone',
+        related='partner_id.phone',
+    )
+    email = fields.Char(
+        string='E-mail',
+        related='partner_id.email',
+    )
+
+
+class PickingResPartnerCheck(models.Model):
+    _name = 'picking.res.partner.check'
+    _description = 'Picking Partner Check'
+
+    picking_id = fields.Many2one(
+        comodel_name='stock.picking',
+        string='Picking ID',
+    )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Name',
+        required=True,
+    )
+    phone = fields.Char(
+        string='Phone',
+        related='partner_id.phone',
+    )
+    email = fields.Char(
+        string='E-mail',
+        related='partner_id.email',
     )
