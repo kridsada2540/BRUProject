@@ -12,15 +12,12 @@
     'version': '1.0',
 
     'depends': [
-        'stock',
-        'purchase'
-
-
+        'bru_purchase',
     ],
 
     'data': [
         # 'security/inventory_security.xml',
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/bru_stock.xml',
         'reports/report.xml',
         'reports/report_inventory.xml',

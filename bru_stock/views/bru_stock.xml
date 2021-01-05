@@ -33,11 +33,23 @@
                          <group col="12">
                                  <div colspan="6" style="padding:8px;">
                                      <label for = "people_purchase" />
-                                        <field name="people_purchase" colspan="3"/>
+                                        <field name="people_purchase" force_save="1" readonly="1">
+                                            <tree>
+                                                <field name="partner_id" />
+                                                <field name="phone" />
+                                                <field name="email" />
+                                            </tree>
+                                        </field>
                                  </div>
                                  <div colspan="6"  style="padding:8px;" >
                                     <label for ="people_check_id"/>
-                                        <field name="people_check_id" colspan="3"/>
+                                        <field name="people_check_id" force_save="1" readonly="1">
+                                            <tree>
+                                                <field name="partner_id" />
+                                                <field name="phone" />
+                                                <field name="email" />
+                                            </tree>
+                                        </field>
                                  </div>
                          </group>
                      </sheet>
