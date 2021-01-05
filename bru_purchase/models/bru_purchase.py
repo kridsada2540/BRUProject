@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from datetime import datetime
 from odoo.exceptions import UserError
+
 
 class BruPurchase(models.Model):
     _inherit = 'purchase.order'
-
 
     purchase_number = fields.Char(
         string='Purchase Request',
@@ -19,6 +18,7 @@ class BruPurchase(models.Model):
             ('PR03', u'PR03=ขออนุมัติจัดจ้าง')
         ],
         store=True,
+        required=True,
         string=u'ประเภทเอกสาร'
     )
     years = fields.Selection(
@@ -42,17 +42,20 @@ class BruPurchase(models.Model):
     name_id = fields.Many2one(
         'res.partner',
         store=True,
-        string=u'เจ้าหน้าที่พัสดุ'
+        string=u'เจ้าหน้าที่พัสดุ',
+        default=lambda self: self.env.user.partner_id,
     )
     branch_id = fields.Many2one(
         'faculty.branch',
         store=True,
-        string=u'สาขา'
+        string=u'สาขา',
+        default=lambda self: self.env.user.partner_id.faculty_branch,
     )
     faculty_ids = fields.Many2one(
         'bru.faculty',
         store=True,
-        string=u'คณะ / สำนักงาน / ศูนย์'
+        string=u'คณะ / สำนักงาน / ศูนย์',
+        default=lambda self: self.env.user.partner_id.faculty_ids,
     )
     bru_officer_id = fields.Many2one(
         'bru.branch',
@@ -97,14 +100,14 @@ class BruPurchase(models.Model):
         string=u'ยอดงบประมาณคงเหลือ'
     )
     people_purchase = fields.One2many(
-        'res.partner',
-        'name',
+        'res.partner.purchase',
+        'purchase_id',
         store=True,
         string=u'คณะกรรมการจัดซื้อ / จัดจ้าง'
     )
     people_check_id = fields.One2many(
-        'res.partner',
-        'name',
+        'res.partner.check',
+        'purchase_id',
         store=True,
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
     )
@@ -119,24 +122,23 @@ class BruPurchase(models.Model):
                 if cash_balance < 0:
                     raise UserError(_(u'ยอดเกินกำหนดการสั่งซื้อ!!!'))
                 order.budget_id.remain_budg_id = cash_balance
-                print (cash_balance)
             elif remain > 0:
                 cash_balance2 = remain - order.amount_total
                 if cash_balance2 < 0:
                     raise UserError(_(u'ยอดเกินกำหนดการสั่งซื้อ!!!'))
                 order.budget_id.remain_budg_id = cash_balance2
-                print (cash_balance2)
         return res
 
     @api.model
     def create(self, values):
         request_purchase = super(BruPurchase, self).create(values)
-        request_purchase.purchase_number = request_purchase.document_type + request_purchase.create_sequence()
-        print(request_purchase.document_type)
+        request_purchase.purchase_number = request_purchase.document_type + \
+            request_purchase.create_sequence()
         return request_purchase
 
     def create_sequence(self):
-        sequence_template = self.env.ref('bru_purchase.sequence_purchase_request_id')
+        sequence_template = self.env.ref(
+            'bru_purchase.sequence_purchase_request_id')
         model = self.env['ir.model'].sudo().search([
             ('name', '=', 'Purchase Order')
         ], limit=1)
@@ -158,5 +160,58 @@ class BruPurchase(models.Model):
                 'model_id': model.id,
                 'sequence_id': seq_temp.id,
             })
-            print (seq.sequence_id.next_by_id)
         return seq.sequence_id.next_by_id()
+
+
+class ResPartnerPurchase(models.Model):
+    _name = 'res.partner.purchase'
+    _description = 'Partner Purchase'
+
+    purchase_id = fields.Many2one(
+        comodel_name='purchase.order',
+        string='Purchase ID',
+    )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Name',
+        required=True,
+    )
+    phone = fields.Char(
+        related='partner_id.phone',
+        string='Phone',
+    )
+    email = fields.Char(
+        related='partner_id.email',
+        string='E-mail',
+    )
+    is_purchase = fields.Boolean(
+        string='Is Partner Purchase',
+        default=True,
+    )
+
+
+class ResPartnerCheck(models.Model):
+    _name = 'res.partner.check'
+    _description = 'Partner Check'
+
+    purchase_id = fields.Many2one(
+        comodel_name='purchase.order',
+        string='Purchase ID',
+    )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Name',
+        required=True,
+    )
+    phone = fields.Char(
+        related='partner_id.phone',
+        string='Phone',
+    )
+    email = fields.Char(
+        related='partner_id.email',
+        string='E-mail',
+    )
+    is_purchase = fields.Boolean(
+        string='Is Partner Purchase',
+        default=False,
+    )

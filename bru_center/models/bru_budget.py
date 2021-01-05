@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import models, fields
+
 
 class BruBudget(models.Model):
     _name = 'bru.budget'
     _rec_name = 'budget'
     _description = 'Bru Budget'
-
 
     name = fields.Integer(
         string=u'จำนานเงินงบประมาณ'
