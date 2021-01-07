@@ -13,7 +13,7 @@
                             กรอกข้อมูลงบประมาณ
                         </h2>
                         <h1>
-                            <field name="name" placeholder="กรอกจำนวนเงินงบประมาณ" attrs="{'readonly': [('name', '!=', False)]}"/>
+                            <field name="name" placeholder="กรอกจำนวนเงินงบประมาณ"/>
                          </h1>
                         <group>
                             <group>

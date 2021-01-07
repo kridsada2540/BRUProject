@@ -7,6 +7,16 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+                <!-- set group on button Not edit for Stock user -->
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="edit">1</attribute>
+                    <attribute name="groups">stock.group_stock_manager"</attribute>
+                </xpath>
+                <!-- set group on button cancel for Stock user -->
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
                 <xpath expr="//field[@name='partner_id']" position="before">
                     <field name="purchase_number"/>
                     <field name="document_type"/>
@@ -15,6 +25,8 @@
                     <field name="bru_officer_id"/>
 <!--                    <field name="bru_officer_id"/>-->
                     <field name="detail"/>
+                    <field name="po_id"/>
+
                 </xpath>
                 <xpath expr="//field[@name='min_date']" position="after">
                     <field name="name_id" string="เจ้าหน้าที่พัสดุ"/>

@@ -49,12 +49,14 @@ class BruPurchase(models.Model):
         'faculty.branch',
         store=True,
         string=u'สาขา',
+        # related='res_partner.branch_id',
         default=lambda self: self.env.user.partner_id.faculty_branch,
     )
     faculty_ids = fields.Many2one(
         'bru.faculty',
         store=True,
         string=u'คณะ / สำนักงาน / ศูนย์',
+        # related='res_partner.faculty_ids',
         default=lambda self: self.env.user.partner_id.faculty_ids,
     )
     bru_officer_id = fields.Many2one(

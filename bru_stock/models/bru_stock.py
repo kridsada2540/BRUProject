@@ -8,8 +8,16 @@ _logger = logging.getLogger(__name__)
 class BruStock(models.Model):
     _inherit = 'stock.picking'
 
+    po_id = fields.Many2one(
+        'purchase.order',
+        required=True,
+        # related='purchase_id.purchase_number',
+        string='Product'
+    )
+
     purchase_number = fields.Char(
         string='Purchase Request',
+        related='purchase_id.purchase_number',
         readonly=True
     )
     document_type = fields.Selection(
@@ -101,6 +109,7 @@ class BruStock(models.Model):
         'picking_id',
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
     )
+
 
     @api.multi
     def _create_backorder(self, backorder_moves=[]):

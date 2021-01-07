@@ -29,31 +29,3 @@ class ResPartner(models.Model):
         string=u'หน่วยงานปฏิบัติ'
     )
 
-    @api.onchange('province_id')
-    def _onchange_province_id(self):
-        res = {}
-        if self.province_id:
-            if self.amphur_id.province_code != self.province_id.code:
-                self.amphur_id = False
-                self.tambon_id = False
-            res['domain'] = {
-                'amphur_id': [('province_code', '=', self.province_id.code)]
-            }
-            return res
-
-    @api.onchange('amphur_id')
-    def _onchange_amphur_id(self):
-        condition = []
-        if self.amphur_id:
-            if self.tambon_id.amphur_code != self.amphur_id.code:
-                self.tambon_id = False
-            condition = [('amphur_code', '=', self.amphur_id.code)]
-        return {'domain': {'tambon_id': condition}}
-
-    @api.onchange('tambon_id')
-    def _onchange_tambon_id(self):
-        if self.tambon_id:
-            zip = self.env['zip'].search(
-                [('tambon_code', '=', self.tambon_id.code)]
-            )
-            self.zip = zip.name

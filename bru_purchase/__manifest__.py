@@ -17,7 +17,7 @@
     ],
 
     'data': [
-        # 'security/purchase_security.xml',
+        'security/purchase_security.xml',
         'security/ir.model.access.csv',
         'data/purchase_sequence.xml',
         'views/bru_purchase.xml',

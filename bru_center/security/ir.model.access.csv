@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_bru_faculty,access.bru.faculty,model_bru_faculty,base.group_user,1,1,1,0
-access_faculty_branch,access.faculty.branch,model_faculty_branch,base.group_user,1,1,1,0
-access_bru_budget,access.bru.budget,model_bru_budget,base.group_user,1,1,1,0
+access_bru_faculty,access.bru.faculty,model_bru_faculty,base.group_user,1,0,0,0
+access_faculty_branch,access.faculty.branch,model_faculty_branch,base.group_user,1,0,0,0
+access_bru_budget,access.bru.budget,model_bru_budget,base.group_user,1,1,0,0
 access_bru_branch,access.bru.branch,model_bru_branch,base.group_user,1,1,1,0
