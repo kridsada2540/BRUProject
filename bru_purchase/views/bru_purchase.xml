@@ -19,28 +19,28 @@
                     <attribute name="groups">purchase.group_purchase_manager</attribute>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="purchase_number" attrs="{'invisible': [('state', 'not in', ['draft','purchase'] )]}"/>
+                    <field name="purchase_number" attrs="{'invisible': [('state', 'not in', ['draft','purchase'])]}"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="attrs">{'invisible': [('state', 'not in', ['cancel'] )]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="before">
                     <field name="document_type" attrs="{'readonly': [('purchase_number', '!=', False)]}"/>
-                     <field name="budget_id"/>
-                    <field name="years"/>
-                    <field name="bru_officer_id"/>
-                    <field name="detail"/>
+                     <field name="budget_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="years" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="bru_officer_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="detail" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="name_id" string="เจ้าหน้าที่พัสดุ"/>
-                    <field name="faculty_ids"/>
-                    <field name="branch_id"/>
-                    <field name="for_use"/>
-                    <field name="product"/>
-                    <field name="expenses"/>
-                    <field name="activity"/>
-                    <field name="remain_budg_id"/>
+                    <field name="name_id" string="เจ้าหน้าที่พัสดุ" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="faculty_ids" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="branch_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="for_use" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="product" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="expenses" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="activity" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="remain_budg_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                 </xpath>
 
                  <xpath expr="//sheet/group" position="after">
@@ -48,7 +48,7 @@
                          <group col="12">
                                  <div colspan="6" style="padding:8px;">
                                      <label for = "people_purchase" />
-                                        <field name="people_purchase">
+                                        <field name="people_purchase" attrs="{'readonly': [('state', 'not in', ('draft'))]}">
                                             <tree editable="bottom">
                                                 <field name="partner_id" />
                                                 <field name="phone" />
@@ -58,7 +58,7 @@
                                  </div>
                                  <div colspan="6"  style="padding:8px;" >
                                     <label for ="people_check_id"/>
-                                    <field name="people_check_id">
+                                    <field name="people_check_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}">
                                         <tree editable="bottom">
                                             <field name="partner_id" />
                                             <field name="phone" />
@@ -68,6 +68,15 @@
                                  </div>
                          </group>
                      </sheet>
+                </xpath>
+                <xpath expr="//field[@name='partner_ref']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'not in', ('draft'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'not in', ('draft'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='incoterm_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'not in', ('draft'))]}</attribute>
                 </xpath>
             </field>
         </record>
