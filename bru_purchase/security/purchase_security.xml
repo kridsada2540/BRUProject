@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
-<data noupdate="0">
-    <record id="group_bru_purchase_approvals" model="res.groups">
-        <field name="name">Approvals</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        <field name="category_id" ref="base.module_category_purchase_management"/>
-    </record>
-</data>
+    <data noupdate="0">
+        <record id="purchase_user_bru_rule" model="ir.rule">
+            <field name="name">Purchase user can only see own order</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+            <field name="domain_force">[('name_id','=',user.partner_id.id)]</field>
+        </record>
+        <record id="purchase_manager_bru_rule" model="ir.rule">
+            <field name="name">Purchase manger can see all order</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+    </data>
 </odoo>
