@@ -11,6 +11,17 @@
                 <xpath expr="//button[@name='button_confirm']" position="attributes">
                     <attribute name="groups">purchase.group_purchase_manager</attribute>
                 </xpath>
+
+                <xpath expr="//button[@name='button_done']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='print_quotation']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_rfq_send']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
                 <xpath expr="//button[@name='button_confirm'][last()]" position="attributes">
                     <attribute name="groups">purchase.group_purchase_manager</attribute>
                 </xpath>
