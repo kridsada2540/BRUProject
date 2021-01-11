@@ -7,17 +7,6 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//sheet//group/group" position="before">
-                    <group>
-                        <field name="faculty_ids" placeholder="คณะ"/>
-                        <field name="faculty_branch" placeholder="สาขา"/>
-                        <field name="identification_id" />
-                        <field name="affiliation_id" />
-                        <field name="affiliation" />
-                        <field name="operating_agency_id" />
-                        <field name="operating_agency" />
-                    </group>
-                </xpath>
                 <field name="title" position="replace"></field>
                 <field name="name" position="before">
                     <field name="title" placeholder="Title..."/>
