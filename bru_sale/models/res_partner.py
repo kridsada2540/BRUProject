@@ -13,6 +13,13 @@ class ResPartner(models.Model):
         'faculty.branch',
         string=u'สาขา'
     )
+    language = fields.Selection(
+        selection=[
+            ('en_US', u'English'),
+            ('th_TH', u'Thai'),
+        ],
+        string=u'Language'
+    )
     identification_id = fields.Integer(
         string=u'เลขประจำตัว'
     )

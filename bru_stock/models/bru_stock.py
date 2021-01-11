@@ -11,7 +11,6 @@ class BruStock(models.Model):
     po_id = fields.Many2one(
         'purchase.order',
         required=True,
-        # related='purchase_id.purchase_number',
         string='Product'
     )
 

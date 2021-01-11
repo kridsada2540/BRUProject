@@ -16,9 +16,10 @@
     ],
 
     'data': [
-        # 'security/inventory_security.xml',
+        'security/inventory_security.xml',
         'security/ir.model.access.csv',
         'views/bru_stock.xml',
+        'views/bru_stock_tree.xml',
         'reports/report.xml',
         'reports/report_inventory.xml',
     ],

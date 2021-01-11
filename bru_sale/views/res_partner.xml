@@ -22,6 +22,9 @@
                 <field name="name" position="before">
                     <field name="title" placeholder="Title..."/>
                 </field>
+                <xpath expr="//field[@name='lang']" position="replace">
+                    <field name="language"/>
+                </xpath>
             </field>
         </record>
 

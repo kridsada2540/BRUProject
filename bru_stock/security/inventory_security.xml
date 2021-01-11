@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
-    <data>
-        <record id="group_bru_stock_approvals" model="res.groups">
-            <field name="name">Approvals</field>
-            <field name="category_id" ref="base.module_category_warehouse_management"/>
+    <data noupdate="0">
+        <record id="stock_user_bru_rule" model="ir.rule">
+            <field name="name">Purchase user can only see own order</field>
+            <field name="model_id" ref="stock.group_stock_user"/>
+            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="domain_force">[('name_id','=',user.partner_id.id)]</field>
         </record>
-
+        <record id="stock_manager_bru_rule" model="ir.rule">
+            <field name="name">Purchase manger can see all order</field>
+            <field name="model_id" ref="stock.group_stock_manager"/>
+            <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
     </data>
 </odoo>

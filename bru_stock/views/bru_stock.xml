@@ -7,37 +7,42 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <!-- set group on button Not edit for Stock user -->
-                <xpath expr="//form" position="attributes">
-                    <attribute name="create">0</attribute>
-                    <attribute name="edit">1</attribute>
-                    <attribute name="groups">stock.group_stock_manager"</attribute>
-                </xpath>
+
                 <!-- set group on button cancel for Stock user -->
                 <xpath expr="//button[@name='action_cancel']" position="attributes">
                     <attribute name="groups">stock.group_stock_manager</attribute>
                 </xpath>
+
+                <xpath expr="//button[@name='do_new_transfer']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='do_print_picking']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+
+
                 <xpath expr="//field[@name='partner_id']" position="before">
-                    <field name="purchase_number"/>
-                    <field name="document_type"/>
-                    <field name="budget_id"/>
-                    <field name="years"/>
-                    <field name="bru_officer_id"/>
+                    <field name="purchase_number" attrs="{'readonly': [('purchase_number', '!=', False)]}" />
+                    <field name="document_type" attrs="{'readonly': [('document_type', '!=', False)]}" />
+                    <field name="budget_id" attrs="{'readonly': [('budget_id', '!=', False)]}"/>
+                    <field name="years" attrs="{'readonly': [('years', '!=', False)]}" />
+                    <field name="bru_officer_id" attrs="{'readonly': [('bru_officer_id', '!=', False)]}"/>
 <!--                    <field name="bru_officer_id"/>-->
-                    <field name="detail"/>
-                    <field name="po_id"/>
+                    <field name="detail" attrs="{'readonly': [('detail', '!=', False)]}"/>
+                    <field name="po_id" />
 
                 </xpath>
                 <xpath expr="//field[@name='min_date']" position="after">
-                    <field name="name_id" string="เจ้าหน้าที่พัสดุ"/>
-                    <field name="faculty_ids"/>
-                    <field name="branch_id"/>
-                    <field name="for_use"/>
-                    <field name="product"/>
+                    <field name="name_id" attrs="{'readonly': [('name_id', '!=', False)]}"/>
+                    <field name="faculty_ids" attrs="{'readonly': [('faculty_ids', '!=', False)]}"/>
+                    <field name="branch_id" attrs="{'readonly': [('branch_id', '!=', False)]}"/>
+                    <field name="for_use" attrs="{'readonly': [('for_use', '!=', False)]}"/>
+                    <field name="product" attrs="{'readonly': [('state', 'not in', ('assigned'))]}"/>
 <!--                    <field name="product"/>-->
-                    <field name="expenses"/>
-                    <field name="activity"/>
-                    <field name="remain_budg_id"/>
+                    <field name="expenses" attrs="{'readonly': [('state', 'not in', ('assigned'))]}"/>
+                    <field name="activity" attrs="{'readonly': [('state', 'not in', ('assigned'))]}"/>
+                    <field name="remain_budg_id" attrs="{'readonly': [('state', 'not in', ('assigned'))]}"/>
                 </xpath>
 
                 <xpath expr="//sheet/group" position="after">
@@ -55,7 +60,7 @@
                                  </div>
                                  <div colspan="6"  style="padding:8px;" >
                                     <label for ="people_check_id"/>
-                                        <field name="people_check_id" force_save="1" readonly="1">
+                                        <field name="people_check_id" force_save="1" readonly="1" >
                                             <tree>
                                                 <field name="partner_id" />
                                                 <field name="phone" />

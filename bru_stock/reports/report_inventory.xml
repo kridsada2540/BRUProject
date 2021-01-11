@@ -56,10 +56,11 @@
                                 <p>หมวดรายจ่าย&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     <span t-esc="doc.expenses"/>
                                 </p>
-
+                            <br>
                                     <br>
                                         <p>จึงเรียนมาเพื่อโปรดพิจารณา</p>
                                     </br>
+                            </br>
 
                             <br>
                                 <P ALIGN = "CENTER" >เจ้าหน้าที่พัสดุ&#160;&#160;&#160;&#160;&#160;สาขาวิชา
@@ -79,14 +80,16 @@
                                 </thead>
                             </table>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <span t-field="doc.people_purchase"/>
-                                    </td>
-                                     <td class="text-right">
-                                        <span t-field="doc.people_check_id"/>
-                                    </td>
-                                </tr>
+                                <t t-foreach="request.env['picking.res.partner.purchase']" t-as="obj">
+                                    <tr>
+                                        <td>
+                                            <span t-field="obj.people_purchase"/>
+                                        </td>
+                                         <td class="text-right">
+                                            <span t-field="obj.people_check_id"/>
+                                        </td>
+                                    </tr>
+                                </t>
                             </tbody>
                             <br>
 
@@ -95,6 +98,9 @@
 
                             </br>
                              <br>
+
+                            </br>
+                            <br>
 
                             </br>
 
@@ -135,6 +141,10 @@
                                          </tr>
                                     </t>
                                 </tbody>
+                                <br>
+
+                            </br>
+
                             </table>
                                 <t t-foreach="request.env['purchase.order'].search([('id','=' ,doc.po_id.id)])" t-as="obj">
                                     <div class="row">

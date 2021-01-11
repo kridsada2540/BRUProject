@@ -29,6 +29,19 @@
                 <xpath expr="//button[@name='button_cancel']" position="attributes">
                     <attribute name="groups">purchase.group_purchase_manager</attribute>
                 </xpath>
+
+                <xpath expr="//sheet//button[@name='action_view_picking']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+
+                 <xpath expr="//button[@name='action_view_invoice']" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="purchase_number" attrs="{'invisible': [('state', 'not in', ['draft','purchase'])]}"/>
                 </xpath>
@@ -37,21 +50,21 @@
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="before">
                     <field name="document_type" attrs="{'readonly': [('purchase_number', '!=', False)]}"/>
-                     <field name="budget_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
-                    <field name="years" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="budget_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="years" readonly='True' attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                     <field name="bru_officer_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                     <field name="detail" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="name_id" string="เจ้าหน้าที่พัสดุ" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="name_id" string="เจ้าหน้าที่พัสดุ" readonly='True'  attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                     <field name="faculty_ids" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                     <field name="branch_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                     <field name="for_use" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
-                    <field name="product" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
-                    <field name="expenses" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
-                    <field name="activity" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
-                    <field name="remain_budg_id" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="product" readonly='True' attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="expenses" readonly='True' attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="activity" readonly='True' attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                    <field name="remain_budg_id" readonly='True' attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
                 </xpath>
 
                  <xpath expr="//sheet/group" position="after">
