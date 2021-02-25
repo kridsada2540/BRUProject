@@ -30,13 +30,13 @@
                     <field name="bru_officer_id" attrs="{'readonly': [('bru_officer_id', '!=', False)]}"/>
 <!--                    <field name="bru_officer_id"/>-->
                     <field name="detail" attrs="{'readonly': [('detail', '!=', False)]}"/>
-                    <field name="po_id" />
+                    <field name="prod_id" />
 
                 </xpath>
                 <xpath expr="//field[@name='min_date']" position="after">
                     <field name="name_id" attrs="{'readonly': [('name_id', '!=', False)]}"/>
-                    <field name="faculty_ids" attrs="{'readonly': [('faculty_ids', '!=', False)]}"/>
-                    <field name="branch_id" attrs="{'readonly': [('branch_id', '!=', False)]}"/>
+                    <field name="department_id" attrs="{'readonly': [('department_id', '!=', False)]}"/>
+<!--                    <field name="branch_id" attrs="{'readonly': [('branch_id', '!=', False)]}"/>-->
                     <field name="for_use" attrs="{'readonly': [('for_use', '!=', False)]}"/>
                     <field name="product" attrs="{'readonly': [('state', 'not in', ('assigned'))]}"/>
 <!--                    <field name="product"/>-->
@@ -52,9 +52,9 @@
                                      <label for = "people_purchase" />
                                         <field name="people_purchase" force_save="1" readonly="1">
                                             <tree>
-                                                <field name="partner_id" />
-                                                <field name="phone" />
-                                                <field name="email" />
+                                                <field name="employee_id" />
+                                                <field name="work_phone" />
+                                                <field name="work_email" />
                                             </tree>
                                         </field>
                                  </div>
@@ -62,9 +62,9 @@
                                     <label for ="people_check_id"/>
                                         <field name="people_check_id" force_save="1" readonly="1" >
                                             <tree>
-                                                <field name="partner_id" />
-                                                <field name="phone" />
-                                                <field name="email" />
+                                                <field name="employee_id" />
+                                                <field name="work_phone" />
+                                                <field name="work_email" />
                                             </tree>
                                         </field>
                                  </div>

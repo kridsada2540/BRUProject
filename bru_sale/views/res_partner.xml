@@ -11,9 +11,12 @@
                 <field name="name" position="before">
                     <field name="title" placeholder="Title..."/>
                 </field>
-                <xpath expr="//field[@name='lang']" position="replace">
-                    <field name="language"/>
+
+
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <field name="department_id" placeholder="คณะ / สำนักงาน / ศูนย์'"/>
                 </xpath>
+
             </field>
         </record>
 

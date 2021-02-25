@@ -28,8 +28,8 @@
                                     &#160;&#160;&#160;&#160;&#160;&#160;
                                     <span t-esc="doc.name_id.name"/>
                                 </p>
-                                <p>คณะ / สำนักงาน / ศูนย์&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                                    <span t-esc="doc.faculty_ids.name"/>
+                                <p>คณะ / สาขา&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span t-esc="doc.department_id.name"/>
                                 </p>
                                 <p>มีความประสงค์&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     &#160;&#160;
@@ -42,12 +42,16 @@
                                     &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     <span t-esc="doc.budget_id.budget"/>
                                 </p>
-                                <p>ตามแผนงบประมาณ&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;สาขาวิชา
-                                    <span t-esc="doc.branch_id.name"/>
-
-                                </p>
-                                <p>ผลผลิต&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                <p>ชื่อหน่วยงาน&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span t-esc="doc.bru_officer_id.bru_officer_branch"/>
+                                </p>
+                               <p>ผู้ขาย&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                   &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                   <span t-esc="doc.partner_id.name"/>
+                               </p>
+                                <p>ผลผลิต&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     <span t-esc="doc.product"/>
                                 </p>
                                 <p>กิจกรรม / โครงการ&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
@@ -56,15 +60,15 @@
                                 <p>หมวดรายจ่าย&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
                                     <span t-esc="doc.expenses"/>
                                 </p>
-                            <br>
+
                                     <br>
                                         <p>จึงเรียนมาเพื่อโปรดพิจารณา</p>
                                     </br>
-                            </br>
+
 
                             <br>
                                 <P ALIGN = "CENTER" >เจ้าหน้าที่พัสดุ&#160;&#160;&#160;&#160;&#160;สาขาวิชา
-                                    <span t-esc="doc.branch_id.name"/>
+                                    <span t-esc="doc.department_id.name"/>
                                 </P>
                             </br>
                             <br>
@@ -78,46 +82,37 @@
                                         <th class="text-right"><strong>คณะกรรมการตรวจรับ / พัสดุ&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</strong></th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <t >
+                                        <tr>
+                                            <td >
+                                                <span t-field="doc.people_purchase.employee_id"/>
+                                            </td>
+                                             <td class="text-right">
+                                                <span t-field="doc.people_check_id.employee_id"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                 </tbody>
                             </table>
-                            <tbody>
-                                <t t-foreach="request.env['picking.res.partner.purchase']" t-as="obj">
-                                    <tr>
-                                        <td>
-                                            <span t-field="obj.people_purchase"/>
-                                        </td>
-                                         <td class="text-right">
-                                            <span t-field="obj.people_check_id"/>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
+
                             <br>
 
                             </br>
-                             <br>
-
-                            </br>
-                             <br>
-
-                            </br>
-                            <br>
-
-                            </br>
-
                             <table class="table table-condensed">
                                  <thead>
                                     <tr>
-                                        <th><strong>Description</strong></th>
-                                        <th><strong>Taxes</strong></th>
-                                        <th class="text-center"><strong>Date Req.</strong></th>
-                                        <th class="text-right"><strong>Qty</strong></th>
-                                        <th class="text-right"><strong>Unit Price</strong></th>
-                                        <th class="text-right"><strong>Net Price</strong></th>
+                                        <th><strong>รายละเอียดสินค้า</strong></th>
+                                        <th class="text-center"><strong>ภาษี(ชนิด)</strong></th>
+                                        <th class="text-center"><strong>เวลาสั่งซื้อ</strong></th>
+                                        <th class="text-right"><strong>จำนวนสินค้า</strong></th>
+                                        <th class="text-right"><strong>ราคาต่อหน่วย</strong></th>
+                                        <th class="text-right"><strong>ราคา</strong></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                     <t t-foreach="request.env['purchase.order.line'].search([('order_id','=' ,doc.po_id.id)])" t-as="obj">
+                                     <t t-foreach="request.env['purchase.order.line'].search([('order_id','=' ,doc.prod_id.id)])" t-as="obj">
                                          <tr>
                                              <td>
                                                  <span t-esc="obj.product_id.name"/>
@@ -146,26 +141,26 @@
                             </br>
 
                             </table>
-                                <t t-foreach="request.env['purchase.order'].search([('id','=' ,doc.po_id.id)])" t-as="obj">
+                                <t t-foreach="request.env['purchase.order'].search([('id','=' ,doc.prod_id.id)])" t-as="obj">
                                     <div class="row">
                                         <div class="col-xs-4 pull-right">
                                             <table class="table table-condensed">
                                                 <tr class="border-black">
-                                                    <td><strong>Total Without Taxes</strong></td>
+                                                    <td><strong>ราคาไม่รวมภาษี</strong></td>
                                                     <td class="text-right">
                                                         <span t-field="obj.amount_untaxed"
                                                             />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Taxes</td>
+                                                    <td>ภาษี</td>
                                                     <td class="text-right">
                                                         <span t-field="obj.amount_tax"
                                                             />
                                                     </td>
                                                 </tr>
                                                 <tr class="border-black">
-                                                    <td><strong>Total</strong></td>
+                                                    <td><strong>ราคารวมภาษี</strong></td>
                                                     <td class="text-right">
                                                         <span t-field="obj.amount_total"
                                                             />
@@ -181,11 +176,9 @@
                             <br>
 
                             </br>
-                            <br>
 
-                            </br>
                             <p>&#160;&#160;&#160;&#160;&#160;คณบดี
-                                <span t-esc="doc.faculty_ids.name"/>
+                                <span t-esc="doc.department_id.name"/>
                                 (...................................................)
                             </p>
                             <p>&#160;&#160;ปฏิบัติราชการแทนอธิการบดีมหาวิทยาลัยราชภัฏบุรีรัมย์

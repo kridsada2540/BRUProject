@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
+
 class BruBrach(models.Model):
     _name = 'bru.branch'
     _rec_name = 'bru_officer_branch'
     _description = 'Bru Branch'
 
-    bru_officer_branch_id = fields.Integer(
+    bru_officer_branch_id = fields.Char(
         string=u'รหัสหน่วยงาน'
     )
     bru_officer_branch = fields.Char(

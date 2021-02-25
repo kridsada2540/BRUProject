@@ -40,28 +40,25 @@ class BruPurchase(models.Model):
         string=u'ปีงบประมาณ'
     )
     name_id = fields.Many2one(
-        'res.partner',
-        store=True,
+        'hr.employee',
         string=u'เจ้าหน้าที่พัสดุ',
-        default=lambda self: self.env.user.partner_id,
+        default=lambda self: self._get_name_id(),
     )
-    branch_id = fields.Many2one(
-        'faculty.branch',
-        store=True,
-        string=u'สาขา',
-        # related='res_partner.branch_id',
-        # default=lambda self: self.env.user.partner_id.faculty_branch,
+    department_id = fields.Many2one(
+        'hr.department',
+        string=u'คณะ / สาขา',
+        related='name_id.department_id',
     )
-    faculty_ids = fields.Many2one(
-        'bru.faculty',
-        store=True,
-        string=u'คณะ / สำนักงาน / ศูนย์',
-        # related='res_partner.faculty_ids',
-        # default=lambda self: self.env.user.partner_id.faculty_ids,
-    )
+    # faculty_id = fields.Many2one(
+    #     'hr.department',
+    #     store=True,
+    #     string=u'คณะ / สาขา',
+    #     # default=lambda self: self.env.user.employee_id.department_id,
+    #     # related='hr_employee.employee_id.department_id',
+    #     # default=lambda self: self.env.user.res.users.department_id,
+    # )
     bru_officer_id = fields.Many2one(
         'bru.branch',
-        store=True,
         string=u'ชื่อหน่วยงาน'
     )
     for_use = fields.Char(
@@ -71,7 +68,8 @@ class BruPurchase(models.Model):
     budget_id = fields.Many2one(
         'bru.budget',
         store=True,
-        string=u'ชื่องบประมาณ'
+        string=u'ชื่องบประมาณ',
+        required=True
     )
     product = fields.Char(
         store=True,
@@ -97,22 +95,58 @@ class BruPurchase(models.Model):
     )
     remain_budg_id = fields.Integer(
         readonly=True,
-        store=True,
         related='budget_id.remain_budg_id',
         string=u'ยอดงบประมาณคงเหลือ'
     )
     people_purchase = fields.One2many(
-        'res.partner.purchase',
+        'hr.employee.purchase',
         'purchase_id',
         store=True,
         string=u'คณะกรรมการจัดซื้อ / จัดจ้าง'
     )
     people_check_id = fields.One2many(
-        'res.partner.check',
+        'hr.employee.check',
         'purchase_id',
         store=True,
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
     )
+    can_confirm = fields.Boolean(
+        string="Can Confirm ?",
+        compute="_compute_can_confirm",
+    )
+
+    # @api.depends('create')
+    # def _compute_department_id(self):
+    #     for rec in self:
+    #         rec.department_id = self.env["hr.employee"].sudo().search([('user_id', '=', rec.name_id.id)]).department_id.id
+
+    @api.model
+    def _get_name_id(self):
+        employee = self.env["hr.employee"].search([('user_id', '=', self.env.user.id)])
+        return len(employee) == 1 and employee or False
+
+    @api.multi
+    def _compute_can_confirm(self):
+        for rec in self:
+            can_confirm = False
+            if rec.amount_total > 50000 and self.env.user.has_group('bru_purchase.group_purchase_chancellor'):
+                can_confirm = True
+            if rec.amount_total <= 50000 and self.env.user.has_group('bru_purchase.group_purchase_dean'):
+                can_confirm = True
+            rec.can_confirm = can_confirm
+        return rec
+
+    @api.multi
+    def button_cancel(self):
+        res = super(BruPurchase, self).button_cancel()
+        for order in self:
+            can_confirm = False
+            if order.amount_total > 50000 and self.env.user.has_group('bru_purchase.group_purchase_chancellor'):
+                can_confirm = True
+            if order.amount_total <= 50000 and self.env.user.has_group('bru_purchase.group_purchase_dean'):
+                can_confirm = True
+            order.can_confirm = can_confirm
+        return res
 
     @api.multi
     def button_confirm(self):
@@ -120,22 +154,30 @@ class BruPurchase(models.Model):
         for order in self:
             remain = order.budget_id.remain_budg_id
             if remain == 0:
-                cash_balance = order.budget_id.name - order.amount_total
+                cash_balance = order.budget_id.budget_project - order.amount_total
                 if cash_balance < 0:
                     raise UserError(_(u'ยอดเกินกำหนดการสั่งซื้อ!!!'))
                 order.budget_id.remain_budg_id = cash_balance
+                print (cash_balance)
             elif remain > 0:
                 cash_balance2 = remain - order.amount_total
                 if cash_balance2 < 0:
                     raise UserError(_(u'ยอดเกินกำหนดการสั่งซื้อ!!!'))
                 order.budget_id.remain_budg_id = cash_balance2
+                print (cash_balance2)
         return res
+
+    # @api.multi
+    # def button_cancel(self):
+    #     res = super(BruPurchase, self).button_cancel()
+    #     for order in self:
+    #         order.budget_id.remain_budg_id += order.amount_total
+    #     return res
 
     @api.model
     def create(self, values):
         request_purchase = super(BruPurchase, self).create(values)
-        request_purchase.purchase_number = request_purchase.document_type + \
-            request_purchase.create_sequence()
+        request_purchase.purchase_number = request_purchase.document_type + request_purchase.create_sequence()
         return request_purchase
 
     def create_sequence(self):
@@ -166,24 +208,27 @@ class BruPurchase(models.Model):
 
 
 class ResPartnerPurchase(models.Model):
-    _name = 'res.partner.purchase'
-    _description = 'Partner Purchase'
+    _name = 'hr.employee.purchase'
+    _description = 'Employee Purchase'
 
     purchase_id = fields.Many2one(
         comodel_name='purchase.order',
         string='Purchase ID',
     )
-    partner_id = fields.Many2one(
-        comodel_name='res.partner',
+    employee_id = fields.Many2one(
+        comodel_name='hr.employee',
         string='Name',
         required=True,
     )
-    phone = fields.Char(
-        related='partner_id.phone',
+    work_phone = fields.Char(
+        related='employee_id.work_phone',
+        size=10,
+        readonly=True,
         string='Phone',
     )
-    email = fields.Char(
-        related='partner_id.email',
+    work_email = fields.Char(
+        related='employee_id.work_email',
+        readonly=True,
         string='E-mail',
     )
     is_purchase = fields.Boolean(
@@ -193,27 +238,33 @@ class ResPartnerPurchase(models.Model):
 
 
 class ResPartnerCheck(models.Model):
-    _name = 'res.partner.check'
-    _description = 'Partner Check'
+    _name = 'hr.employee.check'
+    _description = 'Employee Check'
 
     purchase_id = fields.Many2one(
         comodel_name='purchase.order',
         string='Purchase ID',
     )
-    partner_id = fields.Many2one(
-        comodel_name='res.partner',
+    employee_id = fields.Many2one(
+        comodel_name='hr.employee',
         string='Name',
         required=True,
     )
-    phone = fields.Char(
-        related='partner_id.phone',
+    work_phone = fields.Char(
+        related='employee_id.work_phone',
+        size=10,
+        readonly=True,
         string='Phone',
     )
-    email = fields.Char(
-        related='partner_id.email',
+    work_email = fields.Char(
+        related='employee_id.work_email',
+        readonly=True,
         string='E-mail',
     )
     is_purchase = fields.Boolean(
         string='Is Partner Purchase',
-        default=False,
+        default=True,
     )
+
+class EmployeeDepartment(models.Model):
+    _inherit = 'hr.employee'

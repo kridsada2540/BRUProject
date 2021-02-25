@@ -10,11 +10,11 @@
                 <xpath expr="//field[@name='name']" position="before">
                         <field name="purchase_number"/>
                 </xpath>
-
-                <xpath expr="//field[@name='name']" position="before">
-                        <field name="purchase_number"/>
-                </xpath>
             </field>
+        </record>
+
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="domain">[('id', '=', 1)]</field>
         </record>
     </data>
 </odoo>

@@ -1,19 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+
+        <record model="ir.module.category" id="module_category_bru_purchase">
+                <field name="name">BRU Purchase</field>
+                <field name="description">This category for Purchase</field>
+                <field name="sequence">100</field>
+        </record>
+
+<!--        <record id="purchase_user_bru_rule" model="ir.rule">-->
+<!--            <field name="name">Purchase user can only see own order</field>-->
+<!--            <field name="model_id" ref="purchase.model_purchase_order"/>-->
+<!--            <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>-->
+<!--            <field name="domain_force">[('name_id','=', user.id)]</field>-->
+<!--        </record>-->
+
         <record id="purchase_user_bru_rule" model="ir.rule">
-            <field name="name">Purchase user can only see own order</field>
+            <field name="name">Purchase user can see all order</field>
             <field name="model_id" ref="purchase.model_purchase_order"/>
             <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
-            <field name="domain_force">[('name_id','=',user.partner_id.id)]</field>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
         </record>
+
         <record id="purchase_manager_bru_rule" model="ir.rule">
             <field name="name">Purchase manger can see all order</field>
             <field name="model_id" ref="purchase.model_purchase_order"/>
             <field name="groups" eval="[(4, ref('purchase.group_purchase_manager'))]"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="domain_force">[]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
         </record>
+
+<!--        <record id="group_purchase_chancellor" model="res.groups">-->
+<!--            <field name="name">Chancellor</field>-->
+<!--             <field name="model_id" ref="purchase.model_purchase_order"/>-->
+<!--            <field name="groups" eval="[(4, ref('bru_employee.group_employee_chancellor'))]"/>-->
+<!--            <field name="domain_force">[('amount_total', '>', 50000)]</field>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="1"/>-->
+<!--            <field name="perm_create" eval="1"/>-->
+<!--            <field name="perm_unlink" eval="0"/>-->
+<!--        </record>-->
+
+<!--        <record id="group_purchase_dean" model="res.groups">-->
+<!--            <field name="name">Dean</field>-->
+<!--             <field name="model_id" ref="purchase.model_purchase_order"/>-->
+<!--            <field name="groups" eval="[(4, ref('bru_employee.group_employee_dean'))]"/>-->
+<!--            <field name="domain_force">[('amount_total', '&lt;', 50000)]</field>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="1"/>-->
+<!--            <field name="perm_create" eval="1"/>-->
+<!--            <field name="perm_unlink" eval="0"/>-->
+<!--        </record>-->
+
     </data>
 </odoo>
-
-

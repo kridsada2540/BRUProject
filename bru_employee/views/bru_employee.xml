@@ -14,7 +14,6 @@
                         <field name="affiliation" />
                         <field name="operating_agency_id" />
                         <field name="operating_agency" />
-                        <field name="language"/>
                     </group>
                 </xpath>
             </field>

@@ -7,7 +7,8 @@ class BruBudget(models.Model):
     _rec_name = 'budget'
     _description = 'Bru Budget'
 
-    name = fields.Integer(
+    budget_project = fields.Integer(
+        required=True,
         string=u'จำนานเงินงบประมาณ'
     )
     year_budget_id = fields.Selection(
@@ -26,35 +27,44 @@ class BruBudget(models.Model):
         ],
         string=u'ปีงบประมาณ'
     )
-    budget_id = fields.Integer(
+    budget_id = fields.Selection(
+        selection=[
+            ('01', '01'),
+            ('02', '02')
+        ],
         string=u'รหัสงบประมาณ'
+    )
+    department_id = fields.Many2one(
+        'bru.department',
+        store=True,
+        string=u'คณะ / สำนักงาน / ศูนย์',
+
     )
     budget = fields.Char(
         string=u'ชื่องบประมาณ'
     )
-    faculty_ids = fields.Many2one(
-        'bru.faculty',
-        string=u'คณะ / หน่วยงาน'
-    )
-    product_id = fields.Integer(
+    product_id = fields.Char(
+        size=10,
         string=u'รหัสโครงการ / ผลผลิต'
     )
     product = fields.Char(
         string=u'โครงการ / ผลผลิต'
     )
-    expense_cate_id = fields.Integer(
+    expense_cate_id = fields.Char(
+        size=4,
         string=u'รหัสโหมดรายจ่าย'
     )
     expense_cate = fields.Char(
         string=u'หมวดรายจ่าย'
     )
-    expenses_id = fields.Integer(
+    expenses_id = fields.Char(
+        size=5,
         string=u'รหัสรายจ่าย'
     )
     expenses = fields.Char(
         string=u'รายจ่าย'
     )
-    activity_id = fields.Integer(
+    activity_id = fields.Char(
         string=u'รหัสกิจกรรม'
     )
     activity = fields.Char(

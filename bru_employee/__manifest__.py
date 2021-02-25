@@ -12,10 +12,11 @@
     'version': '1.0',
 
     'depends': [
-        'hr',
+        'bru_center'
     ],
 
     'data': [
+        'security/employee_security.xml',
         'views/bru_employee.xml',
     ],
 }

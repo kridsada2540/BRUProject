@@ -12,8 +12,7 @@
     'version': '1.0',
 
     'depends': [
-        'purchase',
-        'bru_center'
+        'bru_employee',
     ],
 
     'data': [
@@ -22,6 +21,7 @@
         'data/purchase_sequence.xml',
         'views/bru_purchase.xml',
         'views/purchase_request_tree.xml',
+        # 'views/purchase_button.xml',
 
     ],
 }

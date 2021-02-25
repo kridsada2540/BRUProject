@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class BruStock(models.Model):
     _inherit = 'stock.picking'
 
-    po_id = fields.Many2one(
+    prod_id = fields.Many2one(
         'purchase.order',
         required=True,
         string='Product'
@@ -46,18 +46,18 @@ class BruStock(models.Model):
         string=u'ปีงบประมาณ'
     )
     name_id = fields.Many2one(
-        'res.partner',
+        'hr.employee',
         related='purchase_id.name_id',
         string=u'เจ้าหน้าที่พัสดุ'
     )
-    branch_id = fields.Many2one(
-        'faculty.branch',
-        related='purchase_id.branch_id',
-        string=u'สาขา'
-    )
-    faculty_ids = fields.Many2one(
-        'bru.faculty',
-        related='purchase_id.faculty_ids',
+    # branch_id = fields.Many2one(
+    #     'faculty.branch',
+    #     related='purchase_id.branch_id',
+    #     string=u'สาขา'
+    # )
+    department_id = fields.Many2one(
+        'hr.department',
+        related='purchase_id.department_id',
         string=u'คณะ / สำนักงาน / ศูนย์'
     )
     bru_officer_id = fields.Many2one(
@@ -99,12 +99,12 @@ class BruStock(models.Model):
         string=u'ยอดงบประมาณคงเหลือ'
     )
     people_purchase = fields.One2many(
-        'picking.res.partner.purchase',
+        'picking.hr.employee.purchase',
         'picking_id',
         string=u'คณะกรรมการจัดซื้อ / จัดจ้าง',
     )
     people_check_id = fields.One2many(
-        'picking.res.partner.check',
+        'picking.hr.employee.check',
         'picking_id',
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
     )
@@ -119,60 +119,66 @@ class BruStock(models.Model):
                 if back_order.backorder_id:
                     # people purhcase
                     for purchase in back_order.backorder_id.people_purchase:
-                        self.env['picking.res.partner.purchase'].create({
+                        self.env['picking.hr.employee.purchase'].create({
                             'picking_id': back_order.id,
-                            'partner_id': purchase.partner_id.id
+                            'employee_id': purchase.employee_id.id
                         })
                     # people check
                     for check in back_order.backorder_id.people_check_id:
-                        self.env['picking.res.partner.check'].create({
+                        self.env['picking.hr.employee.check'].create({
                             'picking_id': back_order.id,
-                            'partner_id': check.partner_id.id,
+                            'employee_id': check.employee_id.id,
                         })
             return backorders
 
 
 class PickingResPartnerPurchase(models.Model):
-    _name = 'picking.res.partner.purchase'
-    _description = 'Picking Partner Purchase'
+    _name = 'picking.hr.employee.purchase'
+    _description = 'Picking Employee Purchase'
 
     picking_id = fields.Many2one(
         comodel_name='stock.picking',
         string='Picking ID',
     )
-    partner_id = fields.Many2one(
-        comodel_name='res.partner',
+    employee_id = fields.Many2one(
+        comodel_name='hr.employee',
         string='Name',
         required=True,
     )
-    phone = fields.Char(
+    work_phone = fields.Char(
+        # related='purchase_id.work_phone',
+        size=10,
+        readonly=True,
         string='Phone',
-        related='partner_id.phone',
     )
-    email = fields.Char(
+    work_email = fields.Char(
+        # related='purchase_id.work_email',
+        readonly=True,
         string='E-mail',
-        related='partner_id.email',
     )
 
 
 class PickingResPartnerCheck(models.Model):
-    _name = 'picking.res.partner.check'
-    _description = 'Picking Partner Check'
+    _name = 'picking.hr.employee.check'
+    _description = 'Picking Employee Check'
 
     picking_id = fields.Many2one(
         comodel_name='stock.picking',
         string='Picking ID',
     )
-    partner_id = fields.Many2one(
-        comodel_name='res.partner',
+    employee_id = fields.Many2one(
+        comodel_name='hr.employee',
         string='Name',
         required=True,
     )
-    phone = fields.Char(
+    work_phone = fields.Char(
+        # related='purchase_id.work_phone',
+        size=10,
+        readonly=True,
         string='Phone',
-        related='partner_id.phone',
     )
-    email = fields.Char(
+    work_email = fields.Char(
+        # related='purchase_id.work_email',
+        readonly=True,
         string='E-mail',
-        related='partner_id.email',
     )

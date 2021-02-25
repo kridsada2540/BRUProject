@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_picking_res_partner_purchase,access.picking.res.partner.purchase,model_picking_res_partner_purchase,base.group_user,1,1,1,0
-access_picking_res_partner_check,access.picking.res.partner.check,model_picking_res_partner_check,base.group_user,1,1,1,0
+access_picking_res_partner_purchase,access.picking.hr.employee.purchase,model_picking_hr_employee_purchase,base.group_user,1,1,1,0
+access_picking_res_partner_check,access.picking.hr.employee.check,model_picking_hr_employee_check,base.group_user,1,1,1,0

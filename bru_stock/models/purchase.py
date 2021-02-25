@@ -12,14 +12,14 @@ class PurchaseOrder(models.Model):
             for picking_id in rec.picking_ids:
                 # people purhcase
                 for purchase in rec.people_purchase:
-                    self.env['picking.res.partner.purchase'].create({
+                    self.env['picking.hr.employee.purchase'].create({
                         'picking_id': picking_id.id,
-                        'partner_id': purchase.partner_id.id
+                        'employee_id': purchase.employee_id.id
                     })
                 # people check
                 for check in rec.people_check_id:
-                    self.env['picking.res.partner.check'].create({
+                    self.env['picking.hr.employee.check'].create({
                         'picking_id': picking_id.id,
-                        'partner_id': check.partner_id.id,
+                        'employee_id': check.employee_id.id,
                     })
         return res

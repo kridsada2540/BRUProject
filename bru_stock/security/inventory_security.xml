@@ -5,7 +5,8 @@
             <field name="name">Purchase user can only see own order</field>
             <field name="model_id" ref="stock.group_stock_user"/>
             <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
-            <field name="domain_force">[('name_id','=',user.partner_id.id)]</field>
+            <field name="domain_force">[('name_id','in',user.user_id.ids)]</field>
+<!--            <field name="domain_force">[('faculty_id','in',user.employee_id.department_id.ids)]</field>-->
         </record>
         <record id="stock_manager_bru_rule" model="ir.rule">
             <field name="name">Purchase manger can see all order</field>

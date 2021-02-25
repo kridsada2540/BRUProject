@@ -5,12 +5,11 @@ from odoo import models, fields, api
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    language = fields.Selection(
-        selection=[
-            ('en_US', u'English'),
-            ('th_TH', u'Thai'),
-        ],
-        string=u'Language'
+    department_id = fields.Many2one(
+        'hr.department',
+        store=True,
+        string=u'คณะ / สำนักงาน / ศูนย์',
     )
+
 
 
