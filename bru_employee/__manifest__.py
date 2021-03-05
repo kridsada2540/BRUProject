@@ -17,6 +17,7 @@
 
     'data': [
         'security/employee_security.xml',
+        # 'security/ir.model.access.csv',
         'views/bru_employee.xml',
     ],
 }

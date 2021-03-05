@@ -16,5 +16,8 @@
         <record id="purchase.purchase_rfq" model="ir.actions.act_window">
             <field name="domain">[('id', '=', 1)]</field>
         </record>
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="domain">[('id', '=', 1)]</field>
+        </record>
     </data>
 </odoo>

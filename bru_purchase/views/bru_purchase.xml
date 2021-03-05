@@ -70,6 +70,10 @@
                     <field name="can_confirm" invisible="0"/>
                 </xpath>
 
+<!--                <xpath expr="//field[@name='price_unit']" position="before">-->
+<!--                    <field name="type_product" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>-->
+<!--                </xpath>-->
+
                   <xpath expr="//sheet/group" position="after">
                      <sheet>
                          <group col="12">
@@ -78,8 +82,7 @@
                                         <field name="people_purchase">
                                             <tree editable="bottom">
                                                 <field name="employee_id" />
-                                                <field name="work_phone" />
-                                                <field name="work_email" />
+                                                <field name="job_id"/>
                                             </tree>
                                         </field>
                                  </div>
@@ -88,8 +91,7 @@
                                     <field name="people_check_id">
                                         <tree editable="bottom">
                                             <field name="employee_id" />
-                                            <field name="work_phone" />
-                                            <field name="work_email" />
+                                            <field name="job_id" />
                                         </tree>
                                     </field>
                                  </div>

@@ -25,7 +25,7 @@
         'views/bru_base.xml',
         'views/bru_branch.xml',
         'views/bru_budget.xml',
-        # 'views/faculty.xml',
+        'views/type_product.xml',
         # 'views/faculty_branch.xml',
     ],
 }

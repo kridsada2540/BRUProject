@@ -21,20 +21,20 @@ class IR(models.Model):
 
     def _get_ids(self):
         ids = []
-        if self.user_has_groups('purchase.group_purchase_user'):
-            ids = self.env['purchase.order'].sudo().search([
+        if self.user_has_groups('stock.group_stock_user'):
+            ids = self.env['stock.picking'].sudo().search([
                 ('create_uid', '=', self.env.user.id),
             ]).ids
             ids.append(0)
             print ids
-        if self.user_has_groups('purchase.group_purchase_manager'):
-            ids = self.env['purchase.order'].search([
+        if self.user_has_groups('stock.group_stock_manager'):
+            ids = self.env['stock.picking'].search([
                 ('name_id.department_id', '=', self.env["hr.employee"].sudo().search([('user_id', '=', self.env.user.id)]).department_id.id),
             ]).ids
-            for line in self.env['purchase.order'].search([
+            for lines in self.env['stock.picking'].search([
                 ('name_id.department_id.parent_id', '=', self.env["hr.employee"].sudo().search([('user_id', '=', self.env.user.id)]).department_id.id)
             ]).ids:
-                ids.append(line)
+                ids.append(lines)
 
         if self.user_has_groups('bru_employee.group_employee_chancellor'):
             ids = self.env['purchase.order'].sudo().search([

@@ -19,6 +19,11 @@
                 </xpath>
 
             </field>
+
+<!--        <record id="stock.stock_picking_type_action" model="ir.actions.act_window">-->
+<!--            <field name="domain">[('id', '=', 1)]</field>-->
+<!--        </record>-->
+
         </record>
     </data>
 </odoo>

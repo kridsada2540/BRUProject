@@ -10,7 +10,6 @@ class BruStock(models.Model):
 
     prod_id = fields.Many2one(
         'purchase.order',
-        required=True,
         string='Product'
     )
 
@@ -28,6 +27,11 @@ class BruStock(models.Model):
         related='purchase_id.document_type',
         string=u'ประเภทเอกสาร'
     )
+
+    # amount_total = fields.Monetary(
+    #     related='purchase_id.document_type',
+    #     string='Total'
+    # )
     years = fields.Selection(
         selection=[
             ('2560', '2560'),
@@ -142,19 +146,13 @@ class PickingResPartnerPurchase(models.Model):
     )
     employee_id = fields.Many2one(
         comodel_name='hr.employee',
-        string='Name',
+        string='ชื่อคณะกรรมการ',
         required=True,
     )
-    work_phone = fields.Char(
-        # related='purchase_id.work_phone',
-        size=10,
+    job_id = fields.Many2one(
+        related='employee_id.job_id',
         readonly=True,
-        string='Phone',
-    )
-    work_email = fields.Char(
-        # related='purchase_id.work_email',
-        readonly=True,
-        string='E-mail',
+        string=u'ตำแหน่งงาน'
     )
 
 
@@ -168,17 +166,11 @@ class PickingResPartnerCheck(models.Model):
     )
     employee_id = fields.Many2one(
         comodel_name='hr.employee',
-        string='Name',
+        string='ชื่อคณะกรรมการ',
         required=True,
     )
-    work_phone = fields.Char(
-        # related='purchase_id.work_phone',
-        size=10,
+    job_id = fields.Many2one(
+        related='employee_id.job_id',
         readonly=True,
-        string='Phone',
-    )
-    work_email = fields.Char(
-        # related='purchase_id.work_email',
-        readonly=True,
-        string='E-mail',
+        string=u'ตำแหน่งงาน'
     )

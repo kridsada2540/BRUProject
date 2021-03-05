@@ -21,7 +21,7 @@
         'data/purchase_sequence.xml',
         'views/bru_purchase.xml',
         'views/purchase_request_tree.xml',
-        # 'views/purchase_button.xml',
+        # 'views/product_type.xml',
 
     ],
 }

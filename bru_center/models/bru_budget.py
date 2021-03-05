@@ -13,10 +13,6 @@ class BruBudget(models.Model):
     )
     year_budget_id = fields.Selection(
         selection=[
-            ('2560', '2560'),
-            ('2561', '2561'),
-            ('2562', '2562'),
-            ('2563', '2563'),
             ('2564', '2564'),
             ('2565', '2565'),
             ('2566', '2566'),
@@ -25,6 +21,7 @@ class BruBudget(models.Model):
             ('2569', '2569'),
             ('2570', '2570')
         ],
+        required=True,
         string=u'ปีงบประมาณ'
     )
     budget_id = fields.Selection(
@@ -35,12 +32,14 @@ class BruBudget(models.Model):
         string=u'รหัสงบประมาณ'
     )
     department_id = fields.Many2one(
-        'bru.department',
+        'hr.department',
         store=True,
+        required=True,
         string=u'คณะ / สำนักงาน / ศูนย์',
 
     )
     budget = fields.Char(
+        required=True,
         string=u'ชื่องบประมาณ'
     )
     product_id = fields.Char(
@@ -48,6 +47,7 @@ class BruBudget(models.Model):
         string=u'รหัสโครงการ / ผลผลิต'
     )
     product = fields.Char(
+        required=True,
         string=u'โครงการ / ผลผลิต'
     )
     expense_cate_id = fields.Char(
@@ -55,6 +55,7 @@ class BruBudget(models.Model):
         string=u'รหัสโหมดรายจ่าย'
     )
     expense_cate = fields.Char(
+        required=True,
         string=u'หมวดรายจ่าย'
     )
     expenses_id = fields.Char(
@@ -62,12 +63,14 @@ class BruBudget(models.Model):
         string=u'รหัสรายจ่าย'
     )
     expenses = fields.Char(
+        required=True,
         string=u'รายจ่าย'
     )
     activity_id = fields.Char(
         string=u'รหัสกิจกรรม'
     )
     activity = fields.Char(
+        required=True,
         string=u'กิจกรรม'
     )
     remain_budg_id = fields.Integer(

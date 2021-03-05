@@ -53,8 +53,7 @@
                                         <field name="people_purchase" force_save="1" readonly="1">
                                             <tree>
                                                 <field name="employee_id" />
-                                                <field name="work_phone" />
-                                                <field name="work_email" />
+                                                <field name="job_id" />
                                             </tree>
                                         </field>
                                  </div>
@@ -63,8 +62,7 @@
                                         <field name="people_check_id" force_save="1" readonly="1" >
                                             <tree>
                                                 <field name="employee_id" />
-                                                <field name="work_phone" />
-                                                <field name="work_email" />
+                                                <field name="job_id" />
                                             </tree>
                                         </field>
                                  </div>

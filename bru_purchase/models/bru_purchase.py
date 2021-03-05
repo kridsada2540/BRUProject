@@ -59,7 +59,8 @@ class BruPurchase(models.Model):
     # )
     bru_officer_id = fields.Many2one(
         'bru.branch',
-        string=u'ชื่อหน่วยงาน'
+        string=u'ชื่อหน่วยงาน',
+        required = True,
     )
     for_use = fields.Char(
         store=True,
@@ -98,16 +99,22 @@ class BruPurchase(models.Model):
         related='budget_id.remain_budg_id',
         string=u'ยอดงบประมาณคงเหลือ'
     )
+    type_product = fields.Many2one(
+        'bru.type',
+        string='Type'
+    )
     people_purchase = fields.One2many(
         'hr.employee.purchase',
         'purchase_id',
         store=True,
+        required=True,
         string=u'คณะกรรมการจัดซื้อ / จัดจ้าง'
     )
     people_check_id = fields.One2many(
         'hr.employee.check',
         'purchase_id',
         store=True,
+        required=True,
         string=u'คณะกรรมการตรวจรับพัสดุ / การจ้าง'
     )
     can_confirm = fields.Boolean(
@@ -217,19 +224,13 @@ class ResPartnerPurchase(models.Model):
     )
     employee_id = fields.Many2one(
         comodel_name='hr.employee',
-        string='Name',
+        string='ชื่อคณะกรรมการ',
         required=True,
     )
-    work_phone = fields.Char(
-        related='employee_id.work_phone',
-        size=10,
+    job_id = fields.Many2one(
+        related='employee_id.job_id',
         readonly=True,
-        string='Phone',
-    )
-    work_email = fields.Char(
-        related='employee_id.work_email',
-        readonly=True,
-        string='E-mail',
+        string=u'ตำแหน่งงาน',
     )
     is_purchase = fields.Boolean(
         string='Is Partner Purchase',
@@ -247,19 +248,13 @@ class ResPartnerCheck(models.Model):
     )
     employee_id = fields.Many2one(
         comodel_name='hr.employee',
-        string='Name',
+        string='ชื่อคณะกรรมการ',
         required=True,
     )
-    work_phone = fields.Char(
-        related='employee_id.work_phone',
-        size=10,
+    job_id = fields.Many2one(
+        related='employee_id.job_id',
         readonly=True,
-        string='Phone',
-    )
-    work_email = fields.Char(
-        related='employee_id.work_email',
-        readonly=True,
-        string='E-mail',
+        string=u'ตำแหน่งงาน',
     )
     is_purchase = fields.Boolean(
         string='Is Partner Purchase',
